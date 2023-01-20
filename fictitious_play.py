@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 """
 we are modelling the game below:
@@ -26,6 +27,14 @@ player2_payoffs = [[-2, -2],
                    [-1, -3]]
 
 
+"""
+player1_payoffs = [[1, -1],
+                   [-1, -1]]
+
+player2_payoffs = [[-1, 1],
+                   [1, 1]]
+"""
+
 def best_response(player, belief):
     if player == 1:
         expected_util_action_1 = player1_payoffs[0][0] * belief[0] + player1_payoffs[0][1] * belief[1]
@@ -34,7 +43,12 @@ def best_response(player, belief):
         expected_util_action_1 = player2_payoffs[0][0] * belief[0] + player2_payoffs[1][0] * belief[1]
         expected_util_action_2 = player2_payoffs[0][1] * belief[0] + player2_payoffs[1][1] * belief[1]
 
-    action = np.argmax([expected_util_action_1, expected_util_action_2])
+
+    if expected_util_action_1 == expected_util_action_2:
+        print("it's a tie")
+        action = random.choice([0,1])
+    else:
+        action = np.argmax([expected_util_action_1, expected_util_action_2])
 
     return action
 
@@ -54,7 +68,7 @@ iteration = 0
 converged = False
 
 player1_counts = [1, 1]
-player2_counts = [1, 1]
+player2_counts = [0, 2]
 
 player1_belief = (player1_counts[0] / (player1_counts[0] + player1_counts[1]),
                   player1_counts[1] / (player1_counts[0] + player1_counts[1]))
