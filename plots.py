@@ -21,7 +21,8 @@ def policy_iter(policy_list, iter=1000):
 
     # Plot
     fig, (ax1, ax2) = plt.subplots(2, 1)
-    fig.tight_layout(pad=3.0)
+    fig.set_size_inches(8, 8, forward=True)
+    fig.tight_layout(pad=5.0)
 
     # Plot Agent 1
     ax1.set(xlabel='Number of iterations', ylabel='Probability',title='Agent-1 policies through iterations')
