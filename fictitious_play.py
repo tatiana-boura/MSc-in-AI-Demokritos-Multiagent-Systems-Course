@@ -11,15 +11,15 @@ we are modelling the game below:
 """
 
 
-"""
+
 player1_payoffs = [[3, 1],
                    [2, 4]]
 
 player2_payoffs = [[-3, -1],
                    [-2, -4]]
+
+
 """
-
-
 player1_payoffs = [[2, 2],
                    [1, 3]]
 
@@ -27,7 +27,7 @@ player2_payoffs = [[-2, -2],
                    [-1, -3]]
 
 
-"""
+
 player1_payoffs = [[1, -1],
                    [-1, -1]]
 
