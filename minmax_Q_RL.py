@@ -6,14 +6,16 @@ from plots import *
 """
 payoffs = [[1, -1],
            [-1, 1]]
-"""
+
 payoffs = [[3, 1],
            [2, 4]]
-"""
 
 payoffs = [[2, 2],
            [1, 3]]
 """
+payoffs = [[1, -1],
+           [-1, -1]]
+
 class QAgent():
     def __init__(self, explor, learning_rate, gamma, player_id):
         self.explor = explor
@@ -47,13 +49,11 @@ class QAgent():
     def update_P(self, opponent):
         bnds = ((0., 1.), (0., 1.))
         cons = ({'type': 'eq', 'fun': lambda x: 1.0 - np.sum(x)})
-        #valid = 0 if opponent == 1 else 1
+
 
         if self.player_id == 1:
-            #f = lambda x: min(x * self.Q[:, valid])
             f = lambda  x: min(np.matmul(x.T,self.Q))
         else:
-            #f = lambda x: min(x * self.Q[valid, :])
             f = lambda  x: min(np.matmul(x.T,self.Q.T))
 
         self.P = minimize(fun=lambda x: -f(x), x0=np.array([0., 0.]), constraints=cons, bounds=bnds).x
@@ -62,14 +62,20 @@ class QAgent():
         valid = 0 if opponent == 1 else 1
 
         if self.player_id == 1:
-            #f = lambda x: min(x * self.Q[:, valid])
             f = lambda  x: min(np.matmul(x.T,self.Q))
         else:
-            #f = lambda x: min(x * self.Q[valid, :])
             f = lambda  x: min(np.matmul(x.T,self.Q.T))
 
         self.V = f(self.P)
 
+def final_expected_payoff(agent1,agent2):
+    expected_util_action_11 = agent1.payoffs[0][0] * agent2.P[0] + agent1.payoffs[0][1] * agent2.P[1]
+    expected_util_action_12 = agent1.payoffs[1][0] * agent2.P[0] + agent1.payoffs[1][1] * agent2.P[1]
+
+    expected_util_action_21 = agent2.payoffs[0][0] * agent1.P[0] + agent2.payoffs[1][0] * agent1.P[1]
+    expected_util_action_22 = agent2.payoffs[0][1] * agent1.P[0] + agent2.payoffs[1][1] * agent1.P[1]
+
+    return expected_util_action_11*agent1.P[0] + expected_util_action_12*agent1.P[1], expected_util_action_21*agent2.P[0] + expected_util_action_22*agent2.P[1]
 
 
 curr_episode = 0
@@ -124,5 +130,10 @@ print(agent2.V)
 
 '''
 
+print("Agents' Expected Payoff:")
+print(final_expected_payoff(agent1,agent2))
+
+policies = policies[:400]
+total_num_of_episodes = 400
 policy_iter(policies,total_num_of_episodes)
 
