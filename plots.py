@@ -1,7 +1,5 @@
 import matplotlib.pyplot as plt
 plt.style.use('bmh')
-#import numpy as np
-
 
 def policy_iter(policy_list, iter=1000):
 

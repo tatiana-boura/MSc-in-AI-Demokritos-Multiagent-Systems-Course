@@ -10,31 +10,12 @@ we are modelling the game below:
         # (2, -2)  (4, -4)#
         ###################
 """
-"""
+
 player1_payoffs = [[3, 1],
                    [2, 4]]
 
 player2_payoffs = [[-3, -1],
                    [-2, -4]]
-
-player1_payoffs = [[2, 2],
-                   [1, 3]]
-
-player2_payoffs = [[-2, -2],
-                   [-1, -3]]
-"""
-player1_payoffs = [[1, -1],
-                   [-1, -1]]
-
-player2_payoffs = [[-1, 1],
-                   [1, 1]]
-"""
-player1_payoffs = [[1, -1],
-                   [-1, 1]]
-
-player2_payoffs = [[-1, 1],
-                   [1, -1]]
-"""
 
 def best_response(player, belief):
     if player == 1:
@@ -74,10 +55,9 @@ def final_expected_payoff(belief1,belief2):
 
 max_iter = 1000
 iteration = 0
-converged = False
 
-player1_counts = [0, 1]
-player2_counts = [0, 1]
+player1_counts = [1, 0]
+player2_counts = [1, 0]
 
 player1_belief = (player1_counts[0] / (player1_counts[0] + player1_counts[1]),
                   player1_counts[1] / (player1_counts[0] + player1_counts[1]))
@@ -97,13 +77,9 @@ while iteration < max_iter:
 
     iteration += 1
 
-
-
-
 print('Nash Equilibria')
 print(player2_belief) # Belief that player2 has about player1
 print(player1_belief)
-
 
 print('Expected payoffs')
 print(final_expected_payoff(player1_belief,player2_belief))
